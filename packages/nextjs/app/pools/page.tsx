@@ -8,8 +8,8 @@ const Pools: NextPage = () => {
     <>
       <PoolContracts />
       <div className="text-center mt-8 bg-secondary p-10">
-        <h1 className="text-4xl my-0">Liquidity Pools</h1>
-        <p className="text-neutral">View and manage your liquidity positions here.</p>
+        <h1 className="text-4xl my-0">流动性池</h1>
+        <p className="text-neutral">查看和管理您的流动性仓位</p>
       </div>
     </>
   );

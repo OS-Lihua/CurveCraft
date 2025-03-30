@@ -8,8 +8,8 @@ const Swap: NextPage = () => {
     <>
       <SwapContracts />
       <div className="text-center mt-8 bg-secondary p-10">
-        <h1 className="text-4xl my-0">Swap Tokens</h1>
-        <p className="text-neutral">Swap tokens using your custom curve contracts here.</p>
+        <h1 className="text-4xl my-0">Token 互换</h1>
+        <p className="text-neutral">使用您的自定义曲线合约进行 Token 互换</p>
       </div>
     </>
   );

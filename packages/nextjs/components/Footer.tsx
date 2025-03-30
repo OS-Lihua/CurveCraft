@@ -35,7 +35,7 @@ export const Footer = () => {
                 <Faucet />
                 <Link href="/blockexplorer" passHref className="btn btn-primary btn-sm font-normal gap-1">
                   <MagnifyingGlassIcon className="h-4 w-4" />
-                  <span>Block Explorer</span>
+                  <span>区块浏览器</span>
                 </Link>
               </>
             )}
