@@ -1,18 +1,14 @@
 "use client";
 
-import { PoolContracts } from "./_components/PoolContracts";
-import type { NextPage } from "next";
-
-const Pools: NextPage = () => {
+export default function PoolsPage() {
   return (
-    <>
-      <PoolContracts />
-      <div className="text-center mt-8 bg-secondary p-10">
-        <h1 className="text-4xl my-0">Liquidity Pools</h1>
-        <p className="text-neutral">View and manage your liquidity positions here.</p>
+    <div className="flex items-center justify-center min-h-screen bg-base-200/30">
+      <div className="card w-[32rem] bg-base-100 shadow-xl p-8">
+        <div className="text-center space-y-4">
+          <h2 className="text-4xl font-bold text-primary">流动性池</h2>
+          <div className="text-xl text-base-content/70">{/* TODO */}</div>
+        </div>
       </div>
-    </>
+    </div>
   );
-};
-
-export default Pools;
+}

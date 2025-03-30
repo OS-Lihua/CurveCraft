@@ -3558,6 +3558,7 @@ __metadata:
     react-copy-to-clipboard: ~5.1.0
     react-dom: ~19.0.0
     react-hot-toast: ~2.4.0
+    solc: ^0.8.29
     tailwindcss: ~3.4.11
     type-fest: ~4.26.1
     typescript: <5.6.0
@@ -6956,6 +6957,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"command-exists@npm:^1.2.8":
+  version: 1.2.9
+  resolution: "command-exists@npm:1.2.9"
+  checksum: 729ae3d88a2058c93c58840f30341b7f82688a573019535d198b57a4d8cb0135ced0ad7f52b591e5b28a90feb2c675080ce916e56254a0f7c15cb2395277cac3
+  languageName: node
+  linkType: hard
+
 "commander@npm:^10.0.0":
   version: 10.0.1
   resolution: "commander@npm:10.0.1"
@@ -6967,6 +6975,13 @@ __metadata:
   version: 4.1.1
   resolution: "commander@npm:4.1.1"
   checksum: d7b9913ff92cae20cb577a4ac6fcc121bd6223319e54a40f51a14740a681ad5c574fd29a57da478a5f234a6fa6c52cbf0b7c641353e03c648b1ae85ba670b977
+  languageName: node
+  linkType: hard
+
+"commander@npm:^8.1.0":
+  version: 8.3.0
+  resolution: "commander@npm:8.3.0"
+  checksum: 0f82321821fc27b83bd409510bb9deeebcfa799ff0bf5d102128b500b7af22872c0c92cb6a0ebc5a4cf19c6b550fba9cedfa7329d18c6442a625f851377bacf0
   languageName: node
   linkType: hard
 
@@ -8852,6 +8867,16 @@ __metadata:
   version: 3.3.3
   resolution: "flatted@npm:3.3.3"
   checksum: 8c96c02fbeadcf4e8ffd0fa24983241e27698b0781295622591fc13585e2f226609d95e422bcf2ef044146ffacb6b68b1f20871454eddf75ab3caa6ee5f4a1fe
+  languageName: node
+  linkType: hard
+
+"follow-redirects@npm:^1.12.1":
+  version: 1.15.9
+  resolution: "follow-redirects@npm:1.15.9"
+  peerDependenciesMeta:
+    debug:
+      optional: true
+  checksum: 859e2bacc7a54506f2bf9aacb10d165df78c8c1b0ceb8023f966621b233717dab56e8d08baadc3ad3b9db58af290413d585c999694b7c146aaf2616340c3d2a6
   languageName: node
   linkType: hard
 
@@ -11084,6 +11109,13 @@ __metadata:
   dependencies:
     "@babel/runtime": ^7.12.5
   checksum: 8ef956d9e63fe6f4041988beda69843b3a6bb48228ea2923a066f6e7c8f7c5dba75fae357318c48a97ed5beae840b8425cb7e727fc1bb77acc65f2005f8945ab
+  languageName: node
+  linkType: hard
+
+"memorystream@npm:^0.3.1":
+  version: 0.3.1
+  resolution: "memorystream@npm:0.3.1"
+  checksum: f18b42440d24d09516d01466c06adf797df7873f0d40aa7db02e5fb9ed83074e5e65412d0720901d7069363465f82dc4f8bcb44f0cde271567a61426ce6ca2e9
   languageName: node
   linkType: hard
 
@@ -13691,6 +13723,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"semver@npm:^5.5.0":
+  version: 5.7.2
+  resolution: "semver@npm:5.7.2"
+  bin:
+    semver: bin/semver
+  checksum: fb4ab5e0dd1c22ce0c937ea390b4a822147a9c53dbd2a9a0132f12fe382902beef4fbf12cf51bb955248d8d15874ce8cd89532569756384f994309825f10b686
+  languageName: node
+  linkType: hard
+
 "semver@npm:^7.1.1, semver@npm:^7.3.5, semver@npm:^7.3.7, semver@npm:^7.3.8, semver@npm:^7.5.3, semver@npm:^7.5.4, semver@npm:^7.6.0, semver@npm:^7.6.3, semver@npm:^7.7.1":
   version: 7.7.1
   resolution: "semver@npm:7.7.1"
@@ -14051,6 +14092,23 @@ __metadata:
     ip-address: ^9.0.5
     smart-buffer: ^4.2.0
   checksum: cd1edc924475d5dfde534adf66038df7e62c7343e6b8c0113e52dc9bb6a0a10e25b2f136197f379d695f18e8f0f2b7f6e42977bf720ddbee912a851201c396ad
+  languageName: node
+  linkType: hard
+
+"solc@npm:^0.8.29":
+  version: 0.8.29
+  resolution: "solc@npm:0.8.29"
+  dependencies:
+    command-exists: ^1.2.8
+    commander: ^8.1.0
+    follow-redirects: ^1.12.1
+    js-sha3: 0.8.0
+    memorystream: ^0.3.1
+    semver: ^5.5.0
+    tmp: 0.0.33
+  bin:
+    solcjs: solc.js
+  checksum: 3380c909be50f780048e1c337f229043ead73387e459c597bcc8a0329c9586e5ca4688c645e062cf77c2fddb3aba5e80558767585c485d260d34f6d758a86f1b
   languageName: node
   linkType: hard
 
@@ -14659,7 +14717,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tmp@npm:^0.0.33":
+"tmp@npm:0.0.33, tmp@npm:^0.0.33":
   version: 0.0.33
   resolution: "tmp@npm:0.0.33"
   dependencies:
