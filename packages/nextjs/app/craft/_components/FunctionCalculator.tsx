@@ -9,8 +9,13 @@ declare global {
   }
 }
 
-export const FunctionCalculator = () => {
+interface FunctionCalculatorProps {
+  onCalculate: (expression: string, range: [number, number]) => void;
+}
+
+export const FunctionCalculator = ({ onCalculate }: FunctionCalculatorProps) => {
   const [functionExpression, setFunctionExpression] = useState("y=");
+  const [range, setRange] = useState({ min: 0.1, max: 10 });
   const [calculatorInstance, setCalculatorInstance] = useState<any>(null);
   const calculatorRef = useRef<HTMLDivElement>(null);
   const [isScriptLoaded, setIsScriptLoaded] = useState(false);
@@ -56,7 +61,7 @@ export const FunctionCalculator = () => {
   // 处理按键输入
   const handleKeyClick = (value: string) => {
     if (value === "clear") {
-      setFunctionExpression("");
+      setFunctionExpression("y=");
       return;
     }
 
@@ -121,12 +126,6 @@ export const FunctionCalculator = () => {
       latex = latex.replace(/ln\(/g, "\\ln(");
       latex = latex.replace(/log\(/g, "\\log(");
 
-      // 检查是否为隐函数
-      if (!latex.includes("=")) {
-        // 如果不包含等号，假设它是右侧表达式，添加y=
-        latex = "y=" + latex;
-      }
-
       // 设置表达式
       calculatorInstance.setExpression({ id: "function", latex: latex });
     } catch (error) {
@@ -134,32 +133,11 @@ export const FunctionCalculator = () => {
     }
   };
 
-  // 处理API提交
-  const handleSubmit = async () => {
-    // 更新图形
-    updateGraph();
+  // 处理提交
+  const handleSubmit = () => {
+    const expr = functionExpression;
 
-    try {
-      // 发送函数表达式到API
-      const response = await fetch("/api/submit-function", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ functionExpression }),
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        alert(`函数已提交成功: ${functionExpression}`);
-      } else {
-        alert(`提交失败: ${data.message}`);
-      }
-    } catch (error) {
-      console.error("提交函数时出错:", error);
-      alert("提交函数时发生错误，请稍后再试");
-    }
+    onCalculate(expr, [range.min, range.max]);
   };
 
   // 键盘按钮配置
@@ -173,70 +151,77 @@ export const FunctionCalculator = () => {
   ];
 
   return (
-    <div className="flex flex-col bg-base-100 px-6 md:px-10 py-8 text-center items-center max-w-6xl rounded-2xl w-full">
-      <h2 className="text-2xl font-bold mb-6">函数图形计算器</h2>
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {/* 左侧：函数输入和小键盘 */}
+      <div className="bg-base-200 rounded-xl p-6">
+        <h3 className="text-xl font-bold mb-4">函数输入</h3>
 
-      <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        {/* 左侧面板：函数输入和小键盘 */}
-        <div className="bg-base-200 rounded-xl p-6">
-          <h3 className="text-xl font-bold mb-4">函数输入</h3>
+        {/* 函数输入框 */}
+        <div className="mb-4">
+          <input
+            type="text"
+            className="input input-bordered w-full text-lg font-mono"
+            value={functionExpression}
+            onChange={e => setFunctionExpression(e.target.value)}
+            onKeyDown={e => e.key === "Enter" && updateGraph()}
+          />
+        </div>
 
-          {/* 函数输入框 */}
-          <div className="mb-4">
+        {/* 范围输入 */}
+        <div className="grid grid-cols-2 gap-4 mb-4">
+          <div>
+            <label className="label">
+              <span className="label-text">x 最小值</span>
+            </label>
             <input
-              type="text"
-              className="input input-bordered w-full text-lg font-mono"
-              placeholder="输入函数，例如: y=x^2"
-              value={functionExpression}
-              onChange={e => setFunctionExpression(e.target.value)}
-              onKeyDown={e => e.key === "Enter" && updateGraph()}
+              type="number"
+              step="0.1"
+              className="input input-bordered w-full"
+              value={range.min}
+              onChange={e => setRange(prev => ({ ...prev, min: parseFloat(e.target.value) }))}
             />
           </div>
-
-          {/* 函数显示 */}
-          <div className="bg-base-300 rounded-lg p-3 mb-4">
-            <p className="text-left">
-              当前函数：<span className="font-mono font-bold text-primary">{functionExpression || "请输入函数"}</span>
-            </p>
-          </div>
-
-          {/* 小键盘 */}
-          <div className="grid grid-cols-5 gap-2">
-            {keypadConfig.map((row, rowIndex) => (
-              <React.Fragment key={`row-${rowIndex}`}>
-                {row.map(key => (
-                  <button
-                    key={key}
-                    className="btn btn-sm btn-secondary hover:btn-primary"
-                    onClick={() => handleKeyClick(key)}
-                  >
-                    {key === "*" ? "×" : key === "/" ? "÷" : key === "sqrt" ? "√" : key}
-                  </button>
-                ))}
-              </React.Fragment>
-            ))}
+          <div>
+            <label className="label">
+              <span className="label-text">x 最大值</span>
+            </label>
+            <input
+              type="number"
+              step="0.1"
+              className="input input-bordered w-full"
+              value={range.max}
+              onChange={e => setRange(prev => ({ ...prev, max: parseFloat(e.target.value) }))}
+            />
           </div>
         </div>
 
-        {/* 右侧面板：图形计算器 */}
-        <div className="bg-base-200 rounded-xl p-6">
-          <h3 className="text-xl font-bold mb-4">图形预览</h3>
-          <div
-            ref={calculatorRef}
-            className="w-full h-[400px] md:h-[500px] border-2 border-base-300 rounded-lg bg-white"
-            style={{ minHeight: "400px" }}
-          ></div>
+        {/* 小键盘 */}
+        <div className="grid grid-cols-5 gap-2">
+          {keypadConfig.map((row, i) => (
+            <React.Fragment key={i}>
+              {row.map(key => (
+                <button key={key} className="btn btn-sm" onClick={() => handleKeyClick(key)}>
+                  {key}
+                </button>
+              ))}
+            </React.Fragment>
+          ))}
+        </div>
+
+        {/* 操作按钮 */}
+        <div className="mt-4 space-x-4">
+          <button className="btn btn-primary" onClick={updateGraph}>
+            预览
+          </button>
+          <button className="btn btn-secondary" onClick={handleSubmit}>
+            确认
+          </button>
         </div>
       </div>
 
-      {/* 确认按钮 */}
-      <div className="flex gap-4">
-        <button className="btn btn-primary btn-wide" onClick={updateGraph}>
-          预览图形
-        </button>
-        <button className="btn btn-accent btn-wide" onClick={handleSubmit}>
-          确认提交
-        </button>
+      {/* 右侧：图形显示 */}
+      <div className="bg-base-200 rounded-xl p-6">
+        <div ref={calculatorRef} className="w-full h-[500px]" />
       </div>
     </div>
   );

@@ -1,0 +1,5 @@
+flask==2.3.3
+numpy>=1.22.0
+sympy>=1.10.0
+scipy>=1.9.0
+gunicorn==21.2.0 
